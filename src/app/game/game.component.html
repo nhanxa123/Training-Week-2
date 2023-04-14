@@ -1,0 +1,24 @@
+<body>
+    <header>
+        <h1>Rock paper scissors challenge</h1>
+    </header>
+    <div class="score-board">
+        <div id="user-label" class="badge">You</div>
+        <div id="computer-label" class="badge">Computer</div>
+        <span id="user-score">{{userScoreSpan}}</span>:<span id="computer-score">{{computerScore}}</span>
+    </div>
+    <div class="result">    
+        <p>{{resultDiv}}</p> 
+    </div>
+    <div class="choices">
+        <div class="choice" id="s" (click)="playGame('s')">
+            ✌️
+        </div>
+        <div class="choice" id="r" (click)="playGame('r')">
+            ✊
+        </div>
+        <div class="choice" id="p" (click)="playGame('p')">
+            🖐️
+        </div>
+    </div>
+</body>
