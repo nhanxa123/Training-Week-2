@@ -29,7 +29,7 @@ describe('GameComponent', () => {
   describe("playgame", () => {
     it("should call func game", () => {
       const type = 's';
-      component.playGame(type);
+      expect(window.alert).toBeCalledWith("sr")
     });
   });
 
