@@ -1,10 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { GameComponent } from './game.component';
+
 
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
+
+  class LoggMocke {
+    public alert = jest.fn();
+  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -35,6 +39,7 @@ describe('GameComponent', () => {
       const computerChoice = 's';
       component.game(userChoice);
       component.win(userChoice, computerChoice);
+      expect(window.alert).toBeCalledWith("You: R , Computer: S ==> You win")
     });
 
     it("win when case is ps", () => {
@@ -42,6 +47,7 @@ describe('GameComponent', () => {
       const computerChoice = 's';
       component.game(userChoice);
       component.win(userChoice, computerChoice);
+      expect(window.alert).toBeCalledWith("You: P , Computer: S ==> Computer win")
     });
 
     it("win when case is sp", () => {
@@ -49,6 +55,7 @@ describe('GameComponent', () => {
       const computerChoice = 'p';
       component.game(userChoice);
       component.win(userChoice, computerChoice);
+      expect(window.alert).toBeCalledWith("You: S , Computer: P ==> You win")
     });
 
     it("lose when case is rp", () => {
@@ -56,6 +63,7 @@ describe('GameComponent', () => {
       const computerChoice = 'p';
       component.game(userChoice);
       component.lose(userChoice, computerChoice);
+      expect(window.alert).toBeCalledWith("You: R , Computer: P ==> Computer win")
     })
 
     it("lose when case is ps", () => {
@@ -63,6 +71,7 @@ describe('GameComponent', () => {
       const computerChoice = 's';
       component.game(userChoice);
       component.lose(userChoice, computerChoice);
+      expect(window.alert).toBeCalledWith("You: P , Computer: S ==> Computer win")
     })
 
     it("lose when case is sr", () => {
@@ -70,6 +79,7 @@ describe('GameComponent', () => {
       const computerChoice = 'r';
       component.game(userChoice);
       component.lose(userChoice, computerChoice);
+      expect(window.alert).toBeCalledWith("You: S , Computer: R ==> Computer win")
     })
 
 
@@ -78,6 +88,7 @@ describe('GameComponent', () => {
       const computerChoice = 'r';
       component.game(userChoice);
       component.draw(userChoice, computerChoice);
+      expect(window.alert).toBeCalledWith("You: R , Computer: R ==> Draw")
     })
 
     it("draw when case is pp", () => {
@@ -85,6 +96,7 @@ describe('GameComponent', () => {
       const computerChoice = 'p';
       component.game(userChoice);
       component.draw(userChoice, computerChoice);
+      expect(window.alert).toBeCalledWith("You: P , Computer: P ==> Draw")
     })
 
     it("draw when case is ss", () => {
@@ -92,6 +104,7 @@ describe('GameComponent', () => {
       const computerChoice = 's';
       component.game(userChoice);
       component.draw(userChoice, computerChoice);
+      expect(window.alert).toBeCalledWith("You: S , Computer: S ==> Draw")
     })
 
 
@@ -101,42 +114,47 @@ describe('GameComponent', () => {
     it("player one has two point", () => {
       component.check("2", "1");
       component.checkWinTotal("hooman");
+      expect(window.alert).toBeCalledWith("You win in total")
     });
   })
   describe("check", () => {
     it("player one has two point", () => {
       component.check("2", "0");
       component.checkWinTotal("hooman");
+      expect(window.alert).toBeCalledWith("You win in total")
     });
   })
 
 
   describe("check", () => {
-    it("player one has two point", () => {
+    it("Computer has two point, You have one point", () => {
       component.check("1", "2");
       component.checkWinTotal("npc");
+      expect(window.alert).toBeCalledWith("Computer win in total")
     });
   })
 
   describe("check", () => {
-    it("player one has two point", () => {
+    it("computer has two point, you have zero point", () => {
       component.check("0", "2");
       component.checkWinTotal("npc");
+      expect(window.alert).toBeCalledWith("Computer win in total")
     });
   })
 
   describe(" Check case computer win", () =>{
     it("Computer Win", () =>{
-      component.checkWinTotal("npc")
+      component.checkWinTotal("npc");
+      expect(window.alert).toHaveBeenCalledWith("computer wins");
     })
   })
-  describe("Check timeout", () => {
-    it('timeout', function(done) {
-      component.check;
-      component.checkWinTotal;
   
+  describe("Check alert", () => {
+    it('alert', function(done) {
+      jest.spyOn(window, "alert");
+      component.check("2", "1");
       setTimeout(function() {
-        expect(component.check).toEqual(true);
+        expect(window.alert).toHaveBeenCalledWith("You win !!!");
         done();
       }, 10);
     });
